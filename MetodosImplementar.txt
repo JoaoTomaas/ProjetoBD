@@ -1,0 +1,38 @@
+Métodos e pesquisas a implementar
+
+NOTA: Quando digo métodos e pesquisas significa que os pontos que se seguem tanto podem ser métodos novos que temos que implementar, como podem ser pesquisas SQL que vão estar dentro dos métodos
+
+Por fazer:
+- album_review
+- music_review
+- manage_data (inserir, alterar e remover informação sobre ARTISTA, ÁLBUM e MÚSICA)
+- search_info
+- share_music
+- cria_playlist
+- cria_concerto
+- compor_musica
+- adicionar músicas à playlist
+- associar compositor a uma música
+- artista pertencer a um grupo
+- albuns de artista
+- associar ficheiro de música a uma música
+- associar ficheio de música a vários utilizadores (partilha de música)
+- como tratar do tipo de artista (parte da herança)
+- associar músicas a um álbum
+- associar músicas e álbuns a um artista
+- ir buscar o rating médio de um álbum através do avg(sum(pontuacao))
+- inserir grupo, indivíduo e compositor (é através do artista??)
+
+Feito por mim:
+- login (Completar e Implementar)
+- register (Completar e Implementar)
+- search_music (Completar e Implementar)
+
+Dúvida:
+- Como associar um utilizador à crítica (ligação escreve crítica)
+
+
+Perguntar ao professor:
+- make_editor VER SE É NECESSÁRIO OU NÃO
+- add VER SE É NECESSÁRIO OU NÃO
+
