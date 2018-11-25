@@ -17,22 +17,28 @@ Por fazer:
 - albuns de artista
 - associar ficheiro de música a uma música
 - associar ficheio de música a vários utilizadores (partilha de música)
-- como tratar do tipo de artista (parte da herança)
 - associar músicas a um álbum
 - associar músicas e álbuns a um artista
 - ir buscar o rating médio de um álbum através do avg(sum(pontuacao))
-- inserir grupo, indivíduo e compositor (é através do artista??)
+- inserir grupo, indivíduo e compositor (é através do artista??) kinda done
+
+- Inserir concerto DOING
+- Atribuir artista a concerto DOING
+- Inserir alinhamento
+- Insert Playlist DONE
+- Inserir musicas na Playlist DOING
+
+
+
 
 Feito por mim:
-- login (Completar e Implementar)
-- register (Completar e Implementar)
-- search_music (Completar e Implementar)
-
-Dúvida:
-- Como associar um utilizador à crítica (ligação escreve crítica)
+- login
+- register
+- search_music
 
 
 Perguntar ao professor:
-- make_editor VER SE É NECESSÁRIO OU NÃO
-- add VER SE É NECESSÁRIO OU NÃO
+- make_editor SIM
+- add NÃO
+
 
