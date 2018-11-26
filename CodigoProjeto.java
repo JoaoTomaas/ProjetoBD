@@ -432,21 +432,23 @@ class Metodos {
 
             if (rs.getString(1).equals(user)){
                 System.out.println("Pode adicionar musicas a playlist");
-                //Vai adicionar musicas aqui
+                //QUERY PARA ADICIONAR, ALTERAR OU REMOVER MUSICAS
             }
             else{
                 System.out.println("Grupo privado");
             }
         }
 
-        //2. Se for publica, qualquer user pode ver
+        //2. Se for publica, qualquer user pode ver, mas só o owner pode alterar
         else if (r.getString(1).equals("public")){
             System.out.println("ESTOU SO A BERE");
+            //QUERY PARA VER SE E O OWNER
+            //QUERY PARA ADICIONAR, ALTERAR OU REMOVER MUSICAS
         }
 
         //3. Se for collaborative, qualquer user pode ver e editar
         else if (r.getString(1).equals("collaborative")){
-            //Vai adicionar musicas aqui
+            //QUERY PARA ADICIONAR, ALTERAR OU REMOVER MUSICAS
         }
     }
 
@@ -525,19 +527,91 @@ class Metodos {
     }
 
     void executa_addartist_concerto (String user, String artist_name, String local, String data, Connection connection) throws SQLException {
-        String AddArtistSQL = "INSERT INTO dar_um_concerto\n" +
-                                 "VALUES ((SELECT id_artista FROM artista WHERE artist_name = ?), (SELECT id_concerto FROM concerto WHERE local = ? AND data = ?))";
-        PreparedStatement p = connection.prepareStatement(AddArtistSQL);
-        p.setString(1,artist_name);
-        p.setString(2,local);
-        p.setString(3, data);
-        p.executeUpdate();
 
-        System.out.println("Artista adicionado");
-        p.close();
+        //1.Verificar se o concerto existe
+        String CheckConcertoSQL = "SELECT * FROM concerto WHERE local = ? AND data = ?";
+        PreparedStatement p = connection.prepareStatement(CheckConcertoSQL);
+        p.setString(1,local);
+        p.setDate(2,java.sql.Date.valueOf(data)); //Tem que ser inserida no formato "2017-07-11"
+        ResultSet r = p.executeQuery();
+
+        if (r.next()){
+            System.out.println("Esse concerto existe");
+        }
+        else{
+            System.out.println("Mano tens que escolher um concerto que ja exista");
+        }
+
+        //2.Verificar se o artista existe
+        String CheckArtistSQL = "SELECT * FROM artista WHERE artist_name = ?";
+        PreparedStatement ps = connection.prepareStatement(CheckArtistSQL);
+        ps.setString(1,artist_name);
+        ResultSet rs = ps.executeQuery();
+
+        if (rs.next()){
+            System.out.println("Essa artista existe");
+        }
+        else{
+            System.out.println("Mano essa artista nao existe, TA MAL");
+        }
+
+        if (r.next() && rs.next()) {
+            String AddArtistSQL = "INSERT INTO dar_um_concerto\n" +
+                    "VALUES ((SELECT id_artista FROM artista WHERE artist_name = ?), (SELECT id_concerto FROM concerto WHERE local = ? AND data = ?))";
+            PreparedStatement pst = connection.prepareStatement(AddArtistSQL);
+            pst.setString(1, artist_name);
+            pst.setString(2, local);
+            pst.setString(3, data);
+            pst.executeUpdate();
+
+            System.out.println("Artista adicionado");
+            pst.close();
+        }
     }
 
-    //void executa_alinhaconcerto
+    void executa_alinhaconcerto (String user, String local, String data, String music_name, String ordem, Connection connection) throws SQLException{
+
+        //1.Verificar se o concerto existe
+        String CheckConcertoSQL = "SELECT * FROM concerto WHERE local = ? AND data = ?";
+        PreparedStatement p = connection.prepareStatement(CheckConcertoSQL);
+        p.setString(1,local);
+        p.setDate(2,java.sql.Date.valueOf(data)); //Tem que ser inserida no formato "2017-07-11"
+        ResultSet r = p.executeQuery();
+
+        if (r.next()){
+            System.out.println("Esse concerto existe");
+        }
+        else{
+            System.out.println("Mano tens que escolher um concerto que ja exista");
+        }
+
+        //2.Verificar se a musica existe
+        String CheckMusicSQL = "SELECT * FROM musica WHERE music_name = ?";
+        PreparedStatement ps = connection.prepareStatement(CheckMusicSQL);
+        ps.setString(1,music_name);
+        ResultSet rs = ps.executeQuery();
+
+        if (rs.next()){
+            System.out.println("Essa musica existe");
+        }
+        else{
+            System.out.println("Mano essa musica nao existe, TA MAL");
+        }
+
+        //3. Inserir a musica na setlist do concerto
+        if (r.next() && rs.next()) {
+            String InsereMusicSetlistSQL = "INSERT INTO alinhamento VALUES ((SELECT id_concerto FROM concerto WHERE local = ? and data = ?)," +
+                    "(SELECT id_musica FROM musica WHERE music_name = ?), ?)";
+            PreparedStatement pst = connection.prepareStatement(InsereMusicSetlistSQL);
+            pst.setString(1, local);
+            pst.setDate(2, java.sql.Date.valueOf(data));
+            pst.setString(3, music_name);
+            pst.setInt(4, Integer.parseInt(ordem));
+            pst.executeUpdate();
+
+            System.out.println("Musica inserida com sucesso na setlist do concerto");
+        }
+    }
 
 }
 
@@ -571,11 +645,11 @@ public class Main {
             //m.executa_search_info("album", "Views", connection); //Esta a funcionar, falta testar a maior parte //music funciona
 
             //FALTA TESTAR
-            //m.executa_addartist_concerto
+            //m.executa_alinhaconcerto("joao","Passeio Maritimo de Alges", "2017-07-11", "Summertime Magic", "3", connection);
+            //m.executa_addartist_concerto("joao", "Childish Gambino", "Passeio Maritimo de Alges", "2017-07-11", connection); //FALTA CORRIGIR AS KEYS, PÔR AMBAS A FK
 
-            //FALTA FAZER
+            //FALTA TERMINAR
             //m.executa_opmusic_playlist
-            //m.executaalinhaconcerto
 
         } catch (SQLException e) {
             e.printStackTrace();
