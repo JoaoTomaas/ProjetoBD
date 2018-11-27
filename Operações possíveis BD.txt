@@ -1,0 +1,19 @@
+OPERAÇÕES POSSÍVEIS:
+- Registo do user
+- Login do user
+- Critica a album
+- Critica a musica
+- Criar playlist
+- Adicionar musicas a playlist
+- Ver playlist
+- Adicionar musicas, albuns e artistas
+- Ver a info de um album
+- Ver a info de um artista
+- Ver a info de uma musica
+- Ver a info de um concerto
+- Partilha de musica
+- Upload de musica
+- Criar concerto
+- Criar setlist de um concerto
+- Alterar ordem da setlist de um concerto
+- Associar artista a um concerto
