@@ -236,8 +236,8 @@ class Metodos {
                     //Info setlist
                     String AlinhamentoSQL = "SELECT music_name FROM musica WHERE id_musica = " +
                             "(SELECT id_musica FROM alinhamento WHERE id_concerto = " +
-                            "(SELECT id_concerto FROM concerto where local = ? AND data = ?))"; //+
-                            //"ORDER BY id_alinhamento";
+                            "(SELECT id_concerto FROM concerto where local = ? AND data = ?))"; +
+                            "ORDER BY id_alinhamento ASC";
                     PreparedStatement pst = connection.prepareStatement(AlinhamentoSQL);
                     pst.setString(1,local);
                     pst.setString(2, data);
